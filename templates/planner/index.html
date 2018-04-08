@@ -8,7 +8,7 @@
     <body>
         <ul>
             {% for task in tasks %}
-            <a href="">
+            <a href="{% url 'toggle' task.id %}">
                 {% if task.done %}
                 <li class="task-completed">{{ task.title }}</li>
                 {% else %}
