@@ -1,10 +1,21 @@
-
+{% load static %}
 <html>
-    <head><title>Planner</title></head>
+    <head>
+        <title>Planner</title>
+        <link href="{% static 'planner/style.css' %}" rel="stylesheet" type="text/css" />
+    </head>
 
     <body>
-        {% for task in tasks %}
-        <li>{{ task.title }}</li>
-        {% endfor %}
+        <ul>
+            {% for task in tasks %}
+            <a href="">
+                {% if task.done %}
+                <li class="task-completed">{{ task.title }}</li>
+                {% else %}
+                <li>{{ task.title }}</li>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </ul>
     </body>
 </html>

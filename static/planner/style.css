@@ -1,0 +1,10 @@
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.task-completed {
+    text-decoration: line-through;
+    color: lightgray;
+}
