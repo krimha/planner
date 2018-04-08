@@ -3,6 +3,8 @@
     <head><title>Planner</title></head>
 
     <body>
-        Hello world
+        {% for task in tasks %}
+        <li>{{ task.title }}</li>
+        {% endfor %}
     </body>
 </html>
