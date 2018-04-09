@@ -54,7 +54,7 @@
 
          // Actual code
          $(document).ready(function(){
-             $("li.task").click(function() {
+             $(document).on("click", "li.task", function() {
                  var clickedTask = $(this);
                  var taskId = clickedTask.attr("data-task-id");
                  $.post("/planner/toggle",
