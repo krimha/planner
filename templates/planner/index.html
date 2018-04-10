@@ -65,7 +65,8 @@
                         });
              });
 
-             $("#add-task").click(function() {
+             $("#add-task-form").submit(function(e) {
+                 e.preventDefault();
                  var taskTitle = $("input[name=task_title]").val();
                  $.post("/planner/add",
                         {task_title: taskTitle},
@@ -80,10 +81,10 @@
 
     <body>
 
-        <form action="{% url 'add' %}" method="POST">
+        <form action="{% url 'add' %}" method="POST" id="add-task-form">
             {% csrf_token %}
             {{ form }}
-            <input type="button" id="add-task" value="Add task"/>
+            <input type="submit" id="add-task" value="Add task"/>
         </form>
 
 

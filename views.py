@@ -31,9 +31,11 @@ def add_task(request):
 
     form = TaskForm(request.POST)
 
-    if form.is_valid():
+    if form.is_valid() and request.is_ajax():
         task = Task(title=request.POST['task_title'])
         task.save()
 
-    return render(request, 'planner/task.html', {'task': task})
+        return render(request, 'planner/task.html', {'task': task})
+
+    return HttpResponse(status_code=400)
 
