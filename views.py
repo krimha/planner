@@ -35,5 +35,5 @@ def add_task(request):
         task = Task(title=request.POST['task_title'])
         task.save()
 
-    return redirect('index')
+    return render(request, 'planner/task.html', {'task': task})
 

@@ -54,6 +54,7 @@
 
          // Actual code
          $(document).ready(function(){
+             // Using $(li.task).click does not handle dynamic content
              $(document).on("click", "li.task", function() {
                  var clickedTask = $(this);
                  var taskId = clickedTask.attr("data-task-id");
@@ -62,8 +63,17 @@
                         function (result) {
                             clickedTask.replaceWith(result);
                         });
-                 
              });
+
+             $("#add-task").click(function() {
+                 var taskTitle = $("input[name=task_title]").val();
+                 $.post("/planner/add",
+                        {task_title: taskTitle},
+                        function(result) {
+                            $("ul").append(result);
+                        });
+             })
+
          })
         </script>
     </head>
@@ -73,7 +83,7 @@
         <form action="{% url 'add' %}" method="POST">
             {% csrf_token %}
             {{ form }}
-            <input type="submit" value="Add task"/>
+            <input type="button" id="add-task" value="Add task"/>
         </form>
 
 
