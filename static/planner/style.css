@@ -1,10 +1,28 @@
 
-a {
+a.nodecor {
     text-decoration: none;
     color: inherit;
 }
 
-.task-completed {
+li.task {
+    list-style-type: none;
+}
+
+.task-completed .task-title {
     text-decoration: line-through;
     color: gray;
 }
+
+.status-indicator {
+    color: red;
+}
+
+
+.task-completed .status-indicator {
+    color: green;
+}
+
+.task-inner {
+    display: flex;
+}
+
