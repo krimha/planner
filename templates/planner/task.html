@@ -1,0 +1,5 @@
+{% if task.done %}
+<li class="task task-completed" data-task-id="{{ task.id }}">{{ task.title }}</li>
+{% else %}
+<li class="task" data-task-id="{{ task.id }}">{{ task.title }}</li>
+{% endif %}
