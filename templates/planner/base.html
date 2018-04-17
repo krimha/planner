@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link href="{% static 'planner/style.css' %}" rel="stylesheet" type="text/css" />
+    </head>
+
+    <body>
+        <div id="contents">
+            {% block contents %}{% endblock %}
+        </div> 
+    </body>
+</html>
