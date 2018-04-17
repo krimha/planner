@@ -1,5 +1,7 @@
 from django.contrib import admin
+from .models import Task
 
-from planner.models import Task
+class TaskAdmin(admin.ModelAdmin):
+    readonly_fields = ('created',)
 
-admin.site.register(Task)
+admin.site.register(Task, TaskAdmin)

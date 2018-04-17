@@ -5,5 +5,6 @@ base.html" %}
 
 {% block contents %}
 <h1>{{ task.title }}</h1>
+<p>Created: {{ task.created }}</p>
 <p>Status: {{ task.done|yesno:"DONE,TODO" }}</p>
 {% endblock %}
