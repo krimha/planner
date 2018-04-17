@@ -15,8 +15,9 @@ def tasks(request):
     return render(request, 'planner/tasks.html', context)
 
 def task_details(request, task_id):
+    task = get_object_or_404(Task, pk=task_id)
 
-    return render(request, 'planner/details.html')
+    return render(request, 'planner/details.html', {'task': task})
 
 def toggle_task(request, task_id):
     task = get_object_or_404(Task, pk=task_id)
