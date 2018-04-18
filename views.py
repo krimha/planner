@@ -36,3 +36,11 @@ def add_task(request):
 
     return redirect('tasks')
 
+
+def schedule(request, year=None, week=None):
+    context = {
+        'year': year,
+        'week': week,
+    }
+    return render(request, 'planner/schedule.html', context)
+
