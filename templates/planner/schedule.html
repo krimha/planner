@@ -6,6 +6,9 @@ Week {{ week }} {{ year }}
 
 {% block contents %}
 <h1>
-    Week {{ week }} {{ year }}
+    Week {{ week }} {{ year }} <br/>
 </h1>
+<h2>
+    {{ monday|date:"M d" }} - {{ sunday|date:"M d" }}
+</h2>
 {% endblock %}

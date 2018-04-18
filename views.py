@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST
 from .models import Task
 from .forms import TaskForm
 
-from datetime import datetime
+import datetime as dt
 
 def tasks(request):
     tasks = Task.objects.all()
@@ -40,7 +40,8 @@ def add_task(request):
 
 
 def schedule(request, year=None, month=None, day=None, week=None):
-    current_year, current_week, current_day = datetime.now().isocalendar()
+    now = dt.datetime.now()
+    current_year, current_week, current_weekday = now.isocalendar()
 
     if not year:
         year = current_year
@@ -52,15 +53,20 @@ def schedule(request, year=None, month=None, day=None, week=None):
 
         # We did not supply anything. Default to current week.
         else:
+            # TODO: Might want to offset by one. Check start and end of year.
             week = current_week
 
-        # redirect to get the url right
-        return redirect('schedule', year=year, week=week)
+    # get start and end date of week
+    monday = dt.datetime.strptime('{}-{}-1'.format(year, week), "%Y-%W-%w")
+    sunday = monday + dt.timedelta(days=6)
+
 
 
     context = {
         'year': year,
         'week': week,
+        'monday': monday,
+        'sunday': sunday,
     }
     return render(request, 'planner/schedule.html', context)
 
