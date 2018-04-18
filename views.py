@@ -39,12 +39,24 @@ def add_task(request):
     return redirect('tasks')
 
 
-def schedule(request, year=None, week=None):
-    if year == None and week == None:
-        # isocalendar returns a tuple (year, week_num, week_day)
-        now = datetime.now().isocalendar()
-        year = now[0]
-        week = now[1]
+def schedule(request, year=None, month=None, day=None, week=None):
+    current_year, current_week, current_day = datetime.now().isocalendar()
+
+    if not year:
+        year = current_year
+
+    if not week:
+        if month and day:
+            # TODO Infer week number
+            week = 1
+
+        # We did not supply anything. Default to current week.
+        else:
+            week = current_week
+
+        # redirect to get the url right
+        return redirect('schedule', year=year, week=week)
+
 
     context = {
         'year': year,
