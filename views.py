@@ -4,6 +4,8 @@ from django.views.decorators.http import require_POST
 from .models import Task
 from .forms import TaskForm
 
+from datetime import datetime
+
 def tasks(request):
     tasks = Task.objects.all()
     task_form = TaskForm()
@@ -39,8 +41,10 @@ def add_task(request):
 
 def schedule(request, year=None, week=None):
     if year == None and week == None:
-        year = 2018
-        week = 10000
+        # isocalendar returns a tuple (year, week_num, week_day)
+        now = datetime.now().isocalendar()
+        year = now[0]
+        week = now[1]
 
     context = {
         'year': year,
