@@ -38,6 +38,10 @@ def add_task(request):
 
 
 def schedule(request, year=None, week=None):
+    if year == None and week == None:
+        year = 2018
+        week = 10000
+
     context = {
         'year': year,
         'week': week,
