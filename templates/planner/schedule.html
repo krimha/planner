@@ -1,0 +1,34 @@
+{% extends "planner/base.html" %}
+
+{% block title %}
+Week {{ week }} {{ year }}
+{% endblock %}
+
+
+{% block contents %}
+<h1>
+    Week {{ week }} {{ year }} <br/>
+</h1>{% now "jS F Y H:i" %}
+<h2>
+    {{ monday|date:"M d" }} - {{ sunday|date:"M d" }}
+</h2>
+
+<div class="nav">
+    <a href={% url 'schedule'  previous_string  %}>Previous</a>
+    <a href={% url 'schedule' %}>Today</a>
+    <a href={% url 'schedule'  next_string  %}>Next</a>
+</div>
+
+{% for day, events in week_events.items %}
+<h3>{{ day }}</h3>
+<ul>
+    {% for event in events %}
+    <li>
+        {{ event.start|date:"H:i" }}{% if event.end %}-
+        {{ event.end|date:"H:i" }}{% endif %}:
+        {{event.title}}
+    </li>
+    {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}
