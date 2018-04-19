@@ -71,7 +71,7 @@ def handle_date_string(date_string):
     year, week, weekday = day.isocalendar()
 
     monday = day - dt.timedelta(days=weekday-1)
-    sunday = day + dt.timedelta(days=6)
+    sunday = monday + dt.timedelta(days=6)
 
     context = {
         'monday': monday,
