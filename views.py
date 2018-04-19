@@ -43,13 +43,19 @@ def schedule(request, year=None, month=None, day=None, week=None):
     now = dt.datetime.now()
     current_year, current_week, current_weekday = now.isocalendar()
 
+    year  = int(year)  if year  else None
+    month = int(month) if month else None
+    day   = int(day)   if day   else None
+    week  = int(week)  if week  else None
+
     if not year:
         year = current_year
 
     if not week:
         if month and day:
             # TODO Infer week number
-            week = 1
+            print(type(year), type(month), type(day))
+            week = dt.datetime(year, month, day).isocalendar()[1]
 
         # We did not supply anything. Default to current week.
         else:
