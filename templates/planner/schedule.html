@@ -11,4 +11,13 @@ Week {{ week }} {{ year }}
 <h2>
     {{ monday|date:"M d" }} - {{ sunday|date:"M d" }}
 </h2>
+
+{% for day, events in week_events.items %}
+<h3>{{ day }}</h3>
+<ul>
+    {% for event in events %}
+    <li>{{event.title}}</li>
+    {% endfor %}
+</ul>
+{% endfor %}
 {% endblock %}

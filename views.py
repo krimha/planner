@@ -1,7 +1,9 @@
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_POST
+from django.db.models.functions import TruncDate
+from django.db.models import Count
 
-from .models import Task
+from .models import Task, Event
 from .forms import TaskForm
 
 import datetime as dt
@@ -87,6 +89,23 @@ def handle_date_string(date_string):
 def schedule(request, date_string=None):
 
     context = handle_date_string(date_string)
+
+    WEEKDAYS = ['monday', 'tueday', 'wednesday', 'thursday',
+                'friday', 'saturday', 'sunday']
+    week_start = context['monday']
+    week_end   = context['sunday'] + dt.timedelta(hours=23, minutes=59, seconds=59)
+
+    week_events = Event.objects.filter(start__range=[week_start, week_end])
+
+    events_by_day = {}
+
+    for i, weekday in enumerate(WEEKDAYS):
+        day_start = week_start+dt.timedelta(days=i)
+        day_delta = dt.timedelta(hours=23, minutes=59, seconds=59)
+        events_by_day[weekday] = week_events.filter(start__range=[day_start,
+                                                                  day_start+day_delta])
+
+    context['week_events'] = events_by_day
 
     return render(request, 'planner/schedule.html', context)
 
