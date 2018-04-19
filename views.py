@@ -80,6 +80,8 @@ def handle_date_string(date_string):
         'sunday': sunday,
         'week': week,
         'year': year,
+        'previous_string': (monday - dt.timedelta(days=7)).strftime('%Y-W%W'),
+        'next_string': (monday + dt.timedelta(days=7)).strftime('%Y-W%W'),
     }
 
     return context

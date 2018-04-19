@@ -4,6 +4,7 @@
 Week {{ week }} {{ year }}
 {% endblock %}
 
+
 {% block contents %}
 <h1>
     Week {{ week }} {{ year }} <br/>
@@ -11,6 +12,12 @@ Week {{ week }} {{ year }}
 <h2>
     {{ monday|date:"M d" }} - {{ sunday|date:"M d" }}
 </h2>
+
+<div class="nav">
+    <a href={% url 'schedule'  previous_string  %}>Previous</a>
+    <a href={% url 'schedule' %}>Today</a>
+    <a href={% url 'schedule'  next_string  %}>Next</a>
+</div>
 
 {% for day, events in week_events.items %}
 <h3>{{ day }}</h3>
