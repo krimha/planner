@@ -39,40 +39,54 @@ def add_task(request):
     return redirect('tasks')
 
 
-def schedule(request, year=None, month=None, day=None, week=None):
-    now = dt.datetime.now()
-    current_year, current_week, current_weekday = now.isocalendar()
+def handle_date_string(date_string):
+    '''Handles the date string for the schedule view.
 
-    year  = int(year)  if year  else None
-    month = int(month) if month else None
-    day   = int(day)   if day   else None
-    week  = int(week)  if week  else None
+    Parameters:
+    date_string: A string representing either a week in a year, where the week
+        number is prepended with "W", or a specific date.
 
-    if not year:
-        year = current_year
+    Returns:
+    A dictionary containing the year and week number as ints, and the monday
+    and sunday of that week as datetime objects.
+    '''
 
-    if not week:
-        if month and day:
-            # TODO Infer week number
-            print(type(year), type(month), type(day))
-            week = dt.datetime(year, month, day).isocalendar()[1]
+    if not date_string:
+        return handle_date_string(dt.datetime.now().strftime('%Y-%m-%d'))
 
-        # We did not supply anything. Default to current week.
-        else:
-            # TODO: Might want to offset by one. Check start and end of year.
-            week = current_week
+    day = None
+    try:
+        day = dt.datetime.strptime(date_string, '%Y-%m-%d')
+    except ValueError:
+        pass
 
-    # get start and end date of week
-    monday = dt.datetime.strptime('{}-{}-1'.format(year, week), "%Y-%W-%w")
-    sunday = monday + dt.timedelta(days=6)
+    try:
+        day = dt.datetime.strptime(date_string + '-1', '%Y-W%W-%w')
+    except ValueError:
+        pass
 
+    if not day:
+        return handle_date_string(dt.datetime.now().strftime('%Y-W%W'))
 
+    year, week, weekday = day.isocalendar()
+
+    monday = day - dt.timedelta(days=weekday-1)
+    sunday = day + dt.timedelta(days=6)
 
     context = {
-        'year': year,
-        'week': week,
         'monday': monday,
         'sunday': sunday,
+        'week': week,
+        'year': year,
     }
+
+    return context
+
+
+
+def schedule(request, date_string=None):
+
+    context = handle_date_string(date_string)
+
     return render(request, 'planner/schedule.html', context)
 
