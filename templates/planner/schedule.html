@@ -8,7 +8,7 @@ Week {{ week }} {{ year }}
 {% block contents %}
 <h1>
     Week {{ week }} {{ year }} <br/>
-</h1>
+</h1>{% now "jS F Y H:i" %}
 <h2>
     {{ monday|date:"M d" }} - {{ sunday|date:"M d" }}
 </h2>
@@ -23,7 +23,11 @@ Week {{ week }} {{ year }}
 <h3>{{ day }}</h3>
 <ul>
     {% for event in events %}
-    <li>{{event.title}}</li>
+    <li>
+        {{ event.start|date:"H:i" }}{% if event.end %}-
+        {{ event.end|date:"H:i" }}{% endif %}:
+        {{event.title}}
+    </li>
     {% endfor %}
 </ul>
 {% endfor %}
