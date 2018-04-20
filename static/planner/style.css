@@ -4,6 +4,30 @@ a {
     color: inherit;
 }
 
+#nav {
+    width: 100%;
+    float: left;
+    margin: 0 0 3em 0;
+    padding: 0;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+}
+
+#nav li {
+    float: left;
+}
+
+#nav li a {
+    display: block;
+    padding: 8px 15px;
+    font-weight: bold;
+    border-right: 1px solid #ccc;
+}
+
+#nav li a:hover {
+    text-decoration: underline;
+}
+
 li.task {
     list-style-type: none;
 }
